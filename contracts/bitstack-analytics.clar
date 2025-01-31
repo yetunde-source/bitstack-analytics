@@ -34,3 +34,54 @@
 (define-data-var minimum-stake uint u1000000) ;; Minimum stake amount
 (define-data-var cooldown-period uint u1440) ;; 24 hour cooldown in blocks
 (define-data-var proposal-count uint u0)
+
+;; Data Maps
+(define-map Proposals
+    { proposal-id: uint }
+    {
+        creator: principal,
+        description: (string-utf8 256),
+        start-block: uint,
+        end-block: uint,
+        executed: bool,
+        votes-for: uint,
+        votes-against: uint,
+        minimum-votes: uint
+    }
+)
+
+(define-map UserPositions
+    principal
+    {
+        total-collateral: uint,
+        total-debt: uint,
+        health-factor: uint,
+        last-updated: uint,
+        stx-staked: uint,
+        analytics-tokens: uint,
+        voting-power: uint,
+        tier-level: uint,
+        rewards-multiplier: uint
+    }
+)
+
+(define-map StakingPositions
+    principal
+    {
+        amount: uint,
+        start-block: uint,
+        last-claim: uint,
+        lock-period: uint,
+        cooldown-start: (optional uint),
+        accumulated-rewards: uint
+    }
+)
+
+(define-map TierLevels
+    uint
+    {
+        minimum-stake: uint,
+        reward-multiplier: uint,
+        features-enabled: (list 10 bool)
+    }
+)
